@@ -18,23 +18,28 @@ class _QuizState extends State<Quiz> {
   // I can pass a widgeete for a var and change it conditionaly
   // when we use VAR to declare a variable and assign that var with
   // another type the var type is infer by one who we assign
-  Widget? activeScreen; // passing a pointer to the func
+
+  String? activeScreen;
 
   // executes before the build
   @override
   void initState() {
     super.initState();
-    activeScreen = StartScreen(switchScreen);
+    activeScreen = 'start-screen';
   }
 
   void switchScreen() {
     setState(() {
-      activeScreen = const QuestionsScreen();
+      activeScreen = 'questions-screen';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentScreen = activeScreen == 'start-screen'
+        ? StartScreen(switchScreen)
+        : const QuestionsScreen();
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -44,7 +49,7 @@ class _QuizState extends State<Quiz> {
               Color.fromARGB(255, 107, 15, 168)
             ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           ),
-          child: activeScreen,
+          child: currentScreen,
         ),
       ),
     );
