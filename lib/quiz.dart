@@ -49,6 +49,15 @@ class _QuizState extends State<Quiz> {
     }
   }
 
+  void restarting() {
+    if (selectedAnswers.isNotEmpty) {
+      setState(() {
+        selectedAnswers = [];
+        activeScreen = 'start-screen';
+      });
+    }
+  }
+
   Widget? gettingTheCorrectScreen(String nameScr) {
     switch (nameScr) {
       case 'start-screen':
@@ -56,8 +65,10 @@ class _QuizState extends State<Quiz> {
       case 'questions-screen':
         return QuestionsScreen(onSelectAnswer: chooseAnswer);
       case 'result-screen':
-        print(selectedAnswers);
-        return ResultScreen(chosenAnswers: selectedAnswers);
+        return ResultScreen(
+          chosenAnswers: selectedAnswers,
+          onRestart: restarting,
+        );
       default:
         return null;
     }
